@@ -1,8 +1,9 @@
-import React from "react";
+import React from 'react';
 import "./App.css";
 import { Task } from "./components/Task";
 import { TaskFormModal } from "./components/TaskFormModal";
 import { data } from "./data/tasks";
+import { Header } from './components/Header';
 
 const App = () => {
   const title = "To do list";
@@ -26,12 +27,24 @@ const App = () => {
     console.error("I need to be implemented");
   };
 
+  const taskData = data.map(tache => {
+    return (
+      <Task 
+      id={tache.id}
+      title={tache.title}
+      description={tache.description}
+      done={tache.done}
+      />
+    )
+  })
+
   return (
     <div className="main">
-      <div className="header">
-        <h1>Replace me using the title const</h1>
-      </div>
-      <Task />
+      <Header
+      title={title}
+      />
+
+      {taskData}
       <button
         className="add-task-btn"
         onClick={() => console.log("this button should open the modal")}
