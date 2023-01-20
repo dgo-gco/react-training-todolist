@@ -4,6 +4,8 @@ import { Task } from "./components/Task";
 import { TaskFormModal } from "./components/TaskFormModal";
 import { data } from "./data/tasks";
 import { Header } from './components/Header';
+import { TasksList } from './components/TasksList';
+
 
 const App = () => {
   const title = "To do list";
@@ -27,24 +29,20 @@ const App = () => {
     console.error("I need to be implemented");
   };
 
-  const taskData = data.map(tache => {
-    return (
-      <Task 
-      id={tache.id}
-      title={tache.title}
-      description={tache.description}
-      done={tache.done}
-      />
-    )
-  })
+  // const taskData = data.map(tache => {
+  //   return (
+  //     <Task 
+  //     task={tache}
+  //     />
+  //   )
+  // })
 
   return (
     <div className="main">
       <Header
       title={title}
       />
-
-      {taskData}
+      <TasksList task={tasks[0]}/>
       <button
         className="add-task-btn"
         onClick={() => console.log("this button should open the modal")}
