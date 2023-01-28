@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./App.css";
-import { Task } from "./components/Task";
 import { TaskFormModal } from "./components/TaskFormModal";
 import { data } from "./data/tasks";
 import { Header } from './components/Header';
 import { TasksList } from './components/TasksList';
 
-
 const App = () => {
   const title = "To do list";
-  const tasks = data;
   const taskToEdit: any = null;
+
+  const [show, setShow] = useState(false);
+  const  [tasks, setTasks] = useState(data);
 
   const updateTaskState = (taskId: number) => {
     console.error("I need to be implemented");
@@ -18,7 +18,18 @@ const App = () => {
 
   const addOrEditTask = (event: any, taskToEditId?: number) => {
     event.preventDefault();
-    console.error("I need to be implemented");
+    const formulario = new FormData(event.target)
+    const newTask = Object.fromEntries(formulario)
+
+    const taskPlusId = {
+      id: tasks.length + 1,
+      title: String(newTask.title),
+      description: String(newTask.description),
+      done: false
+    }
+    tasks.push(taskPlusId)
+    console.log(tasks)
+    setShow(false)
   };
 
   const editTask = (taskId: number) => {
@@ -26,34 +37,28 @@ const App = () => {
   };
 
   const deleteTask = (taskId: number) => {
-    console.error("I need to be implemented");
+    setTasks((prev) => prev.filter((task) => task.id !== taskId))
   };
-
-  // const taskData = data.map(tache => {
-  //   return (
-  //     <Task 
-  //     task={tache}
-  //     />
-  //   )
-  // })
 
   return (
     <div className="main">
       <Header
       title={title}
       />
-      <TasksList task={tasks[0]}/>
+      <TasksList
+      tasks={tasks}
+      deleteTask={deleteTask}
+      />
+      
       <button
         className="add-task-btn"
-        onClick={() => console.log("this button should open the modal")}
+        onClick={() => setShow(true)}
       >
         +
       </button>
       <TaskFormModal
-        show={false}
-        handleClose={() =>
-          console.log("pass me a method that will close the modal")
-        }
+        show={show}
+        handleClose={() => {setShow(false)}}
         addOrEditTask={addOrEditTask}
         initialValues={
           taskToEdit != null

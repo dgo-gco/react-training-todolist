@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./TaskFormModal.css";
 
-type TaskFormModalProps = {
+type TaskFormModalProps = { 
   show: boolean;
   handleClose: () => void;
   addOrEditTask: (event: any, taskId?: number) => void;
@@ -18,8 +18,8 @@ export const TaskFormModal = ({
   const [description, setDescription] = useState(
     initialValues?.description ?? undefined
   ); 
-
   // Use a hook to listen to the initial values changes here
+
 
   if (!show) return null;
 
@@ -29,13 +29,13 @@ export const TaskFormModal = ({
         <button
           className="close-btn"
           type="button"
-          onClick={() => "The modal should close iteself"}
+          onClick={() => handleClose()}
         >
           X
         </button>
         <h3>Nouvelle tâche</h3>
         <form
-          onSubmit={(e) => addOrEditTask(e, initialValues?.id)}
+          onSubmit={addOrEditTask} 
           className="task-form"
         >
           <label>
@@ -60,7 +60,7 @@ export const TaskFormModal = ({
           </label>
           <div className="form-actions">
             <button type="submit">Enregistrer</button>
-            <button onClick={() => "The modal should close iteself"}>
+            <button onClick={() => handleClose()}>
               Annuler
             </button>
           </div>

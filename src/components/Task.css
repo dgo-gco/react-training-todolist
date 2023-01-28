@@ -9,6 +9,18 @@
   padding: 20px;
 }
 
+.task-container:nth-child(3n + 1) {
+  background-color: #1bc4bc;
+}
+
+.task-container:nth-child(3n + 2) {
+  background-color: #0cafa7;
+}
+
+.task-container:nth-child(3n + 3) {
+  background-color: #088b84;
+}
+
 .task-content {
   display: flex;
   flex-direction: row;
