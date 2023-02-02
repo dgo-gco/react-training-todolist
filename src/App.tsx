@@ -4,36 +4,53 @@ import { TaskFormModal } from "./components/TaskFormModal";
 import { data } from "./data/tasks";
 import { Header } from './components/Header';
 import { TasksList } from './components/TasksList';
+import { TaskType } from './models/Task';
 
 const App = () => {
   const title = "To do list";
-  const taskToEdit: any = null;
-
   const [show, setShow] = useState(false);
   const  [tasks, setTasks] = useState(data);
+  const  [taskToEdit, setTaskToEdit] = useState<TaskType | null >(null);
 
   const updateTaskState = (taskId: number) => {
-    console.error("I need to be implemented");
+    // console.log(taskId);
+    // setTaskToEditId(taskId);
   };
 
   const addOrEditTask = (event: any, taskToEditId?: number) => {
     event.preventDefault();
-    const formulario = new FormData(event.target)
-    const newTask = Object.fromEntries(formulario)
 
-    const taskPlusId = {
-      id: tasks.length + 1,
-      title: String(newTask.title),
-      description: String(newTask.description),
-      done: false
+    if(taskToEditId != null) {
+      const editedTask = tasks.find((task) => task.id === taskToEditId);
+      if (editedTask) {
+        editedTask.title = event.target.title.value;
+        editedTask.description = event.target.description.value;
+      }
+      setTaskToEdit(null);
+    } else {
+      const formulario = new FormData(event.target)
+      const newTask = Object.fromEntries(formulario)
+      const taskPlusId = {
+        id: tasks[tasks.length - 1].id +1,
+        title: String(newTask.title)!,
+        description: String(newTask.description),
+        done: false
+      } 
+      tasks.push(taskPlusId)
+      setTaskToEdit(null);
     }
-    tasks.push(taskPlusId)
-    console.log(tasks)
+
     setShow(false)
   };
 
   const editTask = (taskId: number) => {
-    console.error("I need to be implemented");
+    const taskEdit = tasks.find((task) => task.id === taskId)
+    if (taskEdit) {
+      setTaskToEdit(taskEdit)
+    }
+    // setTaskToEditId(taskId)
+    setShow(true)
+    console.log(taskEdit)
   };
 
   const deleteTask = (taskId: number) => {
@@ -48,6 +65,7 @@ const App = () => {
       <TasksList
       tasks={tasks}
       deleteTask={deleteTask}
+      editTask={editTask}
       />
       
       <button
@@ -64,7 +82,7 @@ const App = () => {
           taskToEdit != null
             ? {
                 id: taskToEdit.id,
-                title: taskToEdit.title,
+                title: taskToEdit.title!,
                 description: taskToEdit.description,
               }
             : undefined

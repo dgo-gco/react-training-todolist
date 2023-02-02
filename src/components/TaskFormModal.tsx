@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./TaskFormModal.css";
 
 type TaskFormModalProps = { 
@@ -16,9 +16,13 @@ export const TaskFormModal = ({
 }: TaskFormModalProps) => {
   const [title, setTitle] = useState(initialValues?.title ?? undefined);
   const [description, setDescription] = useState(
-    initialValues?.description ?? undefined
-  ); 
-  // Use a hook to listen to the initial values changes here
+    initialValues?.description ?? undefined); 
+  //Use a hook to listen to the initial values changes here
+  useEffect(() => {
+    setTitle(initialValues?.title)
+    setDescription(initialValues?.description)
+  }, [initialValues])
+
 
 
   if (!show) return null;
@@ -35,7 +39,7 @@ export const TaskFormModal = ({
         </button>
         <h3>Nouvelle tâche</h3>
         <form
-          onSubmit={addOrEditTask} 
+          onSubmit={(e) => addOrEditTask(e, initialValues?.id)} 
           className="task-form"
         >
           <label>

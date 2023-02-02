@@ -39,7 +39,7 @@
 .task-actions button {
   border: none;
   background: none;
-  color: #BDBDBD;
+  color: #FFF;
   cursor: pointer;
 }
 
@@ -49,7 +49,7 @@
 }
 
 .task-actions button:hover {
-  color: #1bc4bc;
+  color: #000;
 }
 
 .container {

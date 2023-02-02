@@ -1,13 +1,16 @@
 import React from "react";
 import "./Task.css";
 import { TaskType } from "../models/Task";
+import { AiFillEdit } from 'react-icons/ai';
+import { AiFillDelete } from 'react-icons/ai';
 
 type TaskProps = {
   tasks: TaskType
   deleteTask: (taskId: number) => void
+  editTask: (taskId: number) => void
 };
 
-export const Task = ({tasks, deleteTask}: TaskProps) => {
+export const Task = ({tasks, deleteTask, editTask}: TaskProps) => {
   return (
     <div className="task-container">
       <div className="task-content">
@@ -18,8 +21,8 @@ export const Task = ({tasks, deleteTask}: TaskProps) => {
         <p>{tasks.title}</p>
       </div>
       <div className="task-actions">
-        <button onClick={() => console.log("edit")}>Edit</button>
-        <button onClick={() => deleteTask(tasks.id)}>Delete</button>
+        <button onClick={() => editTask(tasks.id)}> <AiFillEdit /> </button>
+        <button onClick={() => deleteTask(tasks.id)}> <AiFillDelete /> </button>
       </div>
     </div>
   );
